@@ -1,0 +1,56 @@
+    ----------------------   XML   ----------------------
+    
+      <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:progressDrawable="@drawable/dr_progress"
+        android:layout_height="5dp"
+        android:max="100"
+        android:progress="40"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+        
+        
+    ----------------------   JAVA   ----------------------    
+
+        val progress = findViewById<ProgressBar>(R.id.progress)
+
+        val progressBarDrawable = progress.progressDrawable as LayerDrawable
+        val backgroundDrawable = progressBarDrawable.getDrawable(0)
+        val progressDrawable = progressBarDrawable.getDrawable(1)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            progressDrawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                    ContextCompat.getColor(this, R.color.red), BlendModeCompat.SRC_ATOP
+            )
+            backgroundDrawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                    ContextCompat.getColor(this, R.color.lightBlue), BlendModeCompat.SRC_ATOP
+            )
+        } else {
+            progressDrawable.setColorFilter(
+                    ContextCompat.getColor(this, R.color.red), PorterDuff.Mode.SRC_ATOP
+            )
+            backgroundDrawable.setColorFilter(
+                    ContextCompat.getColor(this, R.color.lightBlue), PorterDuff.Mode.SRC_ATOP
+            )
+        }
+        
+        
+        ----------------------   DRAWABLE   ----------------------  
+        
+        <?xml version="1.0" encoding="utf-8"?>
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:id="@android:id/background">
+                <shape android:shape="rectangle" >
+                    <solid android:color="@color/lightBlue" />
+                </shape>
+            </item>
+            <item android:id="@android:id/progress">
+                <clip>
+                    <shape>
+                        <solid android:color="@color/greenn" />
+                    </shape>
+                </clip>
+            </item>
+        </layer-list>
